@@ -1,0 +1,14 @@
+{
+  "name": "nos-han-robado",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@napi-rs/canvas": "0.1.65"
+  },
+  "scripts": {
+    "deploy": "npm install --no-save --force --os=linux --cpu=x64 --libc=glibc @napi-rs/canvas-linux-x64-gnu@0.1.65 && netlify deploy --dir public --prod && node scripts/warm_previews.mjs"
+  },
+  "devDependencies": {
+    "netlify-cli": "26.2.0"
+  }
+}

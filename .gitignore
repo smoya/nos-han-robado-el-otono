@@ -1,0 +1,7 @@
+# Datos en bruto: se descargan con los pasos del README
+/data/
+.netlify/
+__pycache__/
+.DS_Store
+node_modules/
+deno.lock

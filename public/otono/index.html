@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nos han robado el otoño</title>
+<meta name="description" content="76 otoños de termómetros (1950–2025), provincia a provincia: octubre se ha calentado en todas las que tienen datos. Mira cuántos días de otoño te han robado a ti.">
+<meta property="og:title" content="Nos han robado el otoño">
+<meta property="og:description" content="El otoño llega hoy unos 12 días más tarde que el otoño de antes, el de 1961–1990. Mira cuántos te han robado a ti, provincia a provincia.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://noshanrobado.es/otono/">
+<meta property="og:image" content="https://noshanrobado.es/otono/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Nos han robado el otoño: el otoño llega hoy 12 días más tarde que en 1961–1990">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://noshanrobado.es/otono/">
+<meta name="theme-color" content="#0d1b24">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<link rel="preload" href="data/spain.json" as="fetch" crossorigin>
+<link rel="preload" href="data/provinces.json" as="fetch" crossorigin>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="module" src="js/spain.js"></script>
+</head>
+<body>
+
+<a class="skip" href="#contenido">Saltar al contenido</a>
+<header id="hero" class="hero">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+  <div class="hero-inner wrap">
+    <p class="eyebrow">España · 1950–2025</p>
+    <h1 class="hero-title"><span>Nos han</span> <span>robado</span> <span class="hl">el otoño</span></h1>
+    <p class="hero-lede">Recuerdas octubres de chaqueta. Los termómetros también: de mediana, el otoño llega hoy <b id="hero-days">12 días</b> más tarde que el <a class="antes" href="#metodo-antes">otoño de antes</a>, el de 1961–1990. Pasa en <b id="hero-n">todas las provincias</b> con datos.</p>
+    <form id="pick" class="pick" novalidate>
+      <label class="pick-f"><span>¿De dónde eres?</span><select id="pick-prov"><option value="ES111">A Coruña</option><option value="ES211">Álava</option><option value="ES421">Albacete</option><option value="ES521">Alicante</option><option value="ES611">Almería</option><option value="ES120">Asturias</option><option value="ES411">Ávila</option><option value="ES431">Badajoz</option><option value="ES511" selected>Barcelona</option><option value="ES213">Bizkaia</option><option value="ES412">Burgos</option><option value="ES432">Cáceres</option><option value="ES612">Cádiz</option><option value="ES130">Cantabria</option><option value="ES522">Castellón</option><option value="ES630" disabled>Ceuta (sin serie)</option><option value="ES422">Ciudad Real</option><option value="ES613">Córdoba</option><option value="ES423">Cuenca</option><option value="ES212">Gipuzkoa</option><option value="ES512">Girona</option><option value="ES614">Granada</option><option value="ES424">Guadalajara</option><option value="ES615">Huelva</option><option value="ES241">Huesca</option><option value="ES53">Illes Balears</option><option value="ES616">Jaén</option><option value="ES230">La Rioja</option><option value="ES70P">Las Palmas</option><option value="ES413">León</option><option value="ES513">Lleida</option><option value="ES112">Lugo</option><option value="ES300">Madrid</option><option value="ES617">Málaga</option><option value="ES640">Melilla</option><option value="ES620">Murcia</option><option value="ES220">Navarra</option><option value="ES113">Ourense</option><option value="ES414">Palencia</option><option value="ES114">Pontevedra</option><option value="ES415">Salamanca</option><option value="ES70T">Santa Cruz de Tenerife</option><option value="ES416">Segovia</option><option value="ES618">Sevilla</option><option value="ES417">Soria</option><option value="ES514">Tarragona</option><option value="ES242">Teruel</option><option value="ES425">Toledo</option><option value="ES523">Valencia</option><option value="ES418">Valladolid</option><option value="ES419">Zamora</option><option value="ES243">Zaragoza</option></select></label>
+      <label class="pick-f"><span>¿En qué año naciste?</span><input id="pick-born" type="number" inputmode="numeric" min="1935" max="2015" placeholder="1985"></label>
+      <button class="btn btn-primary" type="submit">¿Cuánto otoño me han robado?</button>
+    </form>
+  </div>
+</header>
+
+<div class="topbar" id="topbar" role="region" aria-label="Provincia y año de nacimiento" inert>
+  <div class="wrap topbar-in">
+    <a class="tb-brand" href="#hero">Nos han robado el otoño</a>
+    <label class="tb-f"><span>Provincia</span><select id="bar-prov"><option value="ES111">A Coruña</option><option value="ES211">Álava</option><option value="ES421">Albacete</option><option value="ES521">Alicante</option><option value="ES611">Almería</option><option value="ES120">Asturias</option><option value="ES411">Ávila</option><option value="ES431">Badajoz</option><option value="ES511" selected>Barcelona</option><option value="ES213">Bizkaia</option><option value="ES412">Burgos</option><option value="ES432">Cáceres</option><option value="ES612">Cádiz</option><option value="ES130">Cantabria</option><option value="ES522">Castellón</option><option value="ES630" disabled>Ceuta (sin serie)</option><option value="ES422">Ciudad Real</option><option value="ES613">Córdoba</option><option value="ES423">Cuenca</option><option value="ES212">Gipuzkoa</option><option value="ES512">Girona</option><option value="ES614">Granada</option><option value="ES424">Guadalajara</option><option value="ES615">Huelva</option><option value="ES241">Huesca</option><option value="ES53">Illes Balears</option><option value="ES616">Jaén</option><option value="ES230">La Rioja</option><option value="ES70P">Las Palmas</option><option value="ES413">León</option><option value="ES513">Lleida</option><option value="ES112">Lugo</option><option value="ES300">Madrid</option><option value="ES617">Málaga</option><option value="ES640">Melilla</option><option value="ES620">Murcia</option><option value="ES220">Navarra</option><option value="ES113">Ourense</option><option value="ES414">Palencia</option><option value="ES114">Pontevedra</option><option value="ES415">Salamanca</option><option value="ES70T">Santa Cruz de Tenerife</option><option value="ES416">Segovia</option><option value="ES618">Sevilla</option><option value="ES417">Soria</option><option value="ES514">Tarragona</option><option value="ES242">Teruel</option><option value="ES425">Toledo</option><option value="ES523">Valencia</option><option value="ES418">Valladolid</option><option value="ES419">Zamora</option><option value="ES243">Zaragoza</option></select></label>
+    <label class="tb-f"><span>Naciste en</span><input id="bar-born" type="number" inputmode="numeric" min="1935" max="2015" placeholder="año"></label>
+  </div>
+</div>
+
+<main id="contenido" tabindex="-1">
+<noscript><p class="wrap load-err">Esta web necesita JavaScript para mostrar los datos.</p></noscript>
+
+<section id="tu-otono" class="band season-sec" aria-label="Tu otoño">
+  <div class="wrap">
+    <p class="eyebrow"><span class="tag-you">Tuyo</span> Tu otoño · <span data-p="name">Barcelona</span></p>
+    <div class="life" id="life">
+      <div class="life-has" id="life-has" hidden>
+        <p class="life-pre">Desde que naciste te han robado</p>
+        <p class="life-num"><span id="life-n">0</span><small>días de otoño</small></p>
+        <p class="life-o" id="life-o"></p>
+        <div class="life-blocks" id="life-blocks" aria-hidden="true"></div>
+        <button class="btn btn-primary life-claim" id="life-claim" type="button" hidden><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1l4 4H9v6H7V5H4zM2 10h2v3h8v-3h2v5H2z"/></svg><span>¡Que me los devuelvan!</span><small>Comparte tu denuncia</small></button>
+        <p class="life-cap" id="life-cap"></p>
+      </div>
+      <div class="life-ask" id="life-ask">
+        <p class="life-pre">¿Cuántos otoños te han robado a ti?</p>
+        <label class="life-born"><span>¿En qué año naciste?</span><input id="life-born" type="number" inputmode="numeric" min="1935" max="2015" placeholder="1985"></label>
+        <p class="life-cap">Se suman los días que el otoño llegó tarde en <span data-p="name">Barcelona</span> cada año que has vivido.</p>
+      </div>
+    </div>
+    <h2 class="h2">Y cada año llega un poco más tarde</h2>
+    <div class="se-top">
+      <p class="se-year" id="se-year">2025</p>
+      <p class="se-count"><span id="se-days">12</span><small><b id="se-lbl">días de otoño robados</b> frente al <i><a class="antes" href="#metodo-antes">otoño de antes</a></i></small></p>
+      <p class="se-cap" id="se-cap"></p>
+    </div>
+    <div class="se-band-wrap">
+      <div class="se-months" aria-hidden="true"><span style="left:0">Septiembre</span><span style="left:32.97%">Octubre</span><span style="left:67.03%">Noviembre</span></div>
+      <div class="se-band-box">
+        <canvas id="se-band" class="se-band" role="img" aria-label="Temperatura media de cada día del 1 de septiembre al 30 de noviembre"></canvas>
+        <div class="se-gap" id="se-gap" hidden></div>
+        <div class="se-pin se-pin-fix" style="left:32.97%"><span>1 oct, <b>otoño de antes</b></span></div>
+        <div class="se-pin se-pin-move" id="se-pin-move" hidden><span>llega el otoño · <b id="se-pin-move-date"></b></span></div>
+      </div>
+      <div class="se-scale" aria-hidden="true"><span>más cálido</span><i></i><span>más fresco</span></div>
+    </div>
+    <div class="se-chart-wrap">
+      <div class="se-ctl">
+        <button id="se-play" class="btn btn-primary play" type="button" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2l10 6-10 6z"/></svg><span>Reproducir 1950 → 2025</span></button>
+        <label for="se-year-range" class="sr">Año</label>
+        <input id="se-year-range" type="range" min="1950" max="2025" step="1" value="2025">
+      </div>
+      <p class="se-axis">Días que llegó tarde cada otoño. <b>0</b> = como el <a class="antes" href="#metodo-antes">otoño de antes</a> · <b>+</b> más tarde · <b>−</b> antes</p>
+      <div class="tip se-tip" id="se-tip" hidden></div>
+      <svg id="se-chart" class="se-chart" role="img" aria-label="Días de otoño robados cada año en tu provincia y su tendencia"></svg>
+      <p class="se-legend"><span><i class="lg-dot"></i>cada otoño</span><span><i class="lg-line"></i>tendencia</span><span id="se-leg-area" hidden><i class="lg-area"></i>tus días robados (lo azul resta)</span></p>
+      <p class="se-note"><span id="se-margin"></span></p>
+      <p class="se-flat" id="se-flat" hidden>En Canarias el otoño apenas se enfría, así que un poco de calor equivale a muchos días. Esta cifra no es comparable con la de la Península y no entra en la mediana nacional.</p>
+    </div>
+  </div>
+</section>
+
+<section id="espana" class="band front-sec" aria-label="El otoño llegando a España, antes y hoy">
+  <div class="wrap">
+    <p class="eyebrow"><span class="tag-all">Para todos</span> El frente del otoño</p>
+    <h2 class="h2">El mismo día, antes y hoy</h2>
+    <p class="sub front-sub">Una provincia se pinta de azul el día en que su temperatura media baja de 18 °C, lo normal antes un 1 de octubre. Mismo día en los dos mapas: a la izquierda, cómo era antes; a la derecha, cómo es hoy. <a href="#metodo">¿Por qué 18 °C?</a></p>
+    <div class="front-head">
+      <div class="front-day">
+        <p class="year" id="day-big">1 sep</p>
+      </div>
+      <div class="front-count" id="front-count"></div>
+      <p class="front-note" id="front-note" aria-live="polite"></p>
+    </div>
+    <div class="front-body">
+      <div class="duo-wrap">
+        <div class="duo">
+          <figure class="duo-map"><figcaption><b>Antes</b> 1961–1990</figcaption><canvas id="map-antes" role="img" aria-label="Mapa de España: dónde era otoño ese día en 1961–1990"></canvas></figure>
+          <figure class="duo-map"><figcaption><b>Hoy</b> 2025, último otoño completo</figcaption><canvas id="map-hoy" role="img" aria-label="Mapa de España: dónde es otoño ese día hoy"></canvas></figure>
+        </div>
+        <div class="tip map-tip" id="map-tip" hidden></div>
+        <div class="controls">
+          <button id="play" class="btn btn-primary play" type="button" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2l10 6-10 6z"/></svg><span>Ver llegar el otoño</span></button>
+          <div class="timeline">
+            <label for="day-range" class="sr">Día del otoño</label>
+            <input id="day-range" type="range" min="244" max="334" step="1" value="244">
+            <div class="jumps" id="jumps" aria-hidden="true"></div>
+          </div>
+        </div>
+        <div class="keys" id="keys" role="group" aria-label="Ir a una fecha clave"></div>
+        <div class="scale" id="scale" aria-hidden="true"></div>
+      </div>
+      <div class="panel" id="st-panel">
+      <p class="panel-name" id="st-name"></p>
+      <p class="panel-meta" id="st-meta"></p>
+      <p class="panel-arrive" id="st-arrive"></p>
+      <p class="panel-value" id="st-value"></p>
+      <p class="panel-rank" id="st-rank"></p>
+      <svg id="st-spark" class="spark" role="img" aria-label="Días robados cada año en la provincia elegida"></svg>
+      <p class="spark-legend"><i class="lg-yr"></i>cada año <i class="lg-smooth"></i>tendencia <i class="lg-ref"></i><a class="antes" href="#metodo-antes">otoño de antes</a> (<span id="spark-ref">1961–1990</span>)</p>
+      <p class="panel-spread" id="st-spread"></p>
+      <div class="map-list" id="map-list" role="group" aria-label="Provincias ordenadas por días robados. Usa las flechas para recorrerlas"><div class="ml-inner"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="muro" class="band">
+  <div class="wrap">
+    <p class="eyebrow"><span class="tag-all">Para todos</span> 76 otoños, provincia a provincia</p>
+    <h2 class="h2">No es un año suelto</h2>
+    <p class="sub">Antes, la mitad de los otoños llegaban tarde y la otra mitad pronto. Desde 2015, llegan tarde <b id="wall-late">96</b> de cada 100.</p>
+    <div class="read-key" aria-hidden="true"><span><span class="sw" style="background:rgb(38,92,150)"></span>llegó antes</span><span><span class="sw" style="background:rgb(228,214,190)"></span>como antes</span><span><span class="sw" style="background:rgb(190,30,45)"></span>llegó tarde</span><span class="rk-axis">↓ provincias, de más a menos robadas · → años</span></div>
+    <div class="wall-box">
+      <canvas id="wall" role="img" aria-label="Rejilla de días de otoño robados por provincia y año, de 1950 a 2025. Las cifras de cada provincia están en la tabla de la metodología."></canvas>
+      <div id="wall-tip" class="tip" hidden></div>
+    </div>
+    <p class="wall-legend">Comparado con el <a class="antes" href="#metodo-antes">otoño de antes</a> (1961–1990). El color satura a partir de 15 días. Toca o pasa el cursor por una casilla para ver la cifra.</p>
+  </div>
+</section>
+
+<section id="culpable" class="band band-culprit" aria-labelledby="culpable-h">
+  <div class="wrap">
+    <p class="eyebrow"><span class="tag-all">Para todos</span> El culpable</p>
+    <p class="cul-pre">Ni el Sol ni los volcanes ni el asfalto. Es el de siempre. <em>Oh, sorpresa:</em></p>
+    <h2 class="h2 cul-h" id="culpable-h">Nos lo ha robado <span class="t-warm">el CO<span class="co2">2</span> que emitimos</span></h2>
+    <div class="cul-co2">
+      <div><span class="cul-val">316</span><span class="cul-lbl">partes por millón de CO<span class="co2">2</span> en el aire en 1959</span></div>
+      <span class="cul-arrow" aria-hidden="true">→</span>
+      <div><span class="cul-val t-warm">427</span><span class="cul-lbl">en 2025. Más que en ningún momento de, al menos, los últimos dos millones de años</span></div>
+    </div>
+    <p class="sub cul-sub">El tapón existe, pero está en el aire, no en el suelo. El CO<span class="co2">2</span> de quemar carbón, petróleo y gas retiene el calor que la superficie devuelve hacia el espacio, y sube la temperatura de fondo en todas partes: en la ciudad y en la montaña.</p>
+    <p class="sus-src">Fuentes: <a href="https://gml.noaa.gov/ccgg/trends/" rel="noopener">NOAA, CO<span class="co2">2</span> en Mauna Loa</a> · <a href="https://www.ipcc.ch/report/ar6/wg1/chapter/summary-for-policymakers/" rel="noopener">IPCC AR6, resumen para responsables de políticas</a></p>
+
+    <div class="split cul-how">
+      <div class="split-text">
+        <h3 class="h3">Cómo se roba un otoño</h3>
+        <p>De septiembre a noviembre la temperatura baja un poco cada día: el otoño es una cuesta abajo. El calentamiento no cambia esa pendiente; sube la cuesta entera.</p>
+        <p>Si empieza más arriba y baja al mismo ritmo, tarda más en llegar al mismo sitio.<span id="cul-claim"> En <b data-p="name">Barcelona</b>, la cuesta está hoy <b class="t-warm" id="cul-deg">+2,7 °C</b> más arriba, y llega a los 18 °C <b class="t-warm" id="cul-days">19 días</b> más tarde.</span></p>
+        <p class="you-fine" id="cul-flat" hidden>En Canarias el otoño casi no baja: la cuesta es tan suave que unas décimas de grado equivalen a muchos días.</p>
+      </div>
+      <figure class="cul-fig">
+        <svg id="cul-chart" class="cul-chart" role="img" aria-label="Temperatura media de cada día de otoño en tu provincia: antes y hoy"></svg>
+        <figcaption class="se-legend"><span><i class="lg-ref"></i><a class="antes" href="#metodo-antes">otoño de antes</a></span><span><i class="lg-smooth"></i>hoy, la misma curva desplazada</span></figcaption>
+      </figure>
+    </div>
+
+    <h3 class="h3">Sus cómplices</h3>
+    <p class="sub">No son la causa, pero hacen que en España se note más y antes.</p>
+    <div class="sus-grid">
+        <article class="sus sus-yes">
+          <p class="sus-v">Cómplice · por qué el otoño</p>
+          <h4>Un mar más caliente</h4>
+          <p>El Mediterráneo guarda el calor del verano y lo suelta en otoño. Si llega a septiembre más caliente, las noches de la costa y del interior cercano pueden tardar más en refrescar.</p>
+          <p class="sus-src">Fuentes: <a href="https://data.marine.copernicus.eu/product/MEDSEA_OMI_TEMPSAL_sst_trend/description" rel="noopener">Copernicus Marine, tendencia de temperatura del Mediterráneo</a> · <a href="https://www.ipcc.ch/report/ar6/wg2/chapter/ccp4/" rel="noopener">IPCC AR6, región mediterránea</a></p>
+        </article>
+        <article class="sus sus-yes">
+          <p class="sus-v">Cómplice · por qué Europa va más rápido</p>
+          <h4>Un aire más limpio</h4>
+          <p>El Sol brilla igual, pero el filtro ha cambiado. Desde los años 80, Europa ha quitado gran parte del azufre de chimeneas y tubos de escape, y esas partículas hacían de sombrilla. Al desaparecer, la misma luz llega más limpia al suelo: mejor para respirar, pero destapa calentamiento que la contaminación tapaba. Europa se calienta más del doble de rápido que la media del planeta.</p>
+          <p class="sus-src">Fuentes: <a href="https://doi.org/10.1038/ngeo414" rel="noopener">Vautard et al. 2009, Nature Geoscience</a> · <a href="https://climate.copernicus.eu/esotc/2025" rel="noopener">Copernicus y OMM, estado del clima en Europa 2025</a></p>
+        </article>
+        <article class="sus sus-yes">
+          <p class="sus-v">Cómplice · alarga el verano</p>
+          <h4>Anticiclones y suelos secos</h4>
+          <p>Cuando el anticiclón se queda en septiembre y octubre y el suelo llega seco del verano, el sol ya no gasta energía en evaporar agua y la emplea en calentar el aire. No es la causa, pero lo empeora.</p>
+          <p class="sus-src">Fuentes: <a href="https://doi.org/10.1016/j.earscirev.2010.02.004" rel="noopener">Seneviratne et al. 2010, humedad del suelo y clima</a></p>
+        </article>
+    </div>
+
+    <div id="sospechosos" class="myths">
+      <h3 class="h3">Otras sospechas populares, desmontadas</h3>
+      <p class="sub">Cuando se habla de otoños que no llegan, salen siempre los mismos nombres. Uno a uno, ninguno aguanta los datos.</p>
+      <div class="sus-grid">
+        <article class="sus sus-no">
+          <p class="sus-v">No · solo suma en la ciudad</p>
+          <h4>El asfalto</h4>
+          <p>La idea: hace de tapón y no deja salir el calor de la Tierra. Pero ese calor es mil veces menor que el que llega del Sol, y con 10 cm de asfalto la diferencia de temperatura sería de una centésima de grado. La ciudad sí guarda calor de noche, pero las estaciones de montaña, sin ciudad alrededor, también han perdido días: Navacerrada (1.893 m), +10, e Izaña (2.369 m), +16.</p>
+          <p class="sus-src">Fuentes: <a href="https://www.ipcc.ch/report/ar6/wg1/chapter/chapter-10/" rel="noopener">IPCC AR6, capítulo 10</a> · <a href="https://doi.org/10.5194/se-1-5-2010" rel="noopener">Davies y Davies 2010, calor interno de la Tierra</a></p>
+        </article>
+        <article class="sus sus-no">
+          <p class="sus-v">No</p>
+          <h4>El Sol</h4>
+          <p>El Sol no brilla más que antes: la energía que emite no ha subido desde los años 50; si acaso, ha bajado un poco. Y si fuera el Sol se calentaría también la alta atmósfera, que en cambio se está enfriando.</p>
+          <p class="sus-src">Fuentes: <a href="https://science.nasa.gov/climate-change/faq/is-the-sun-causing-global-warming/" rel="noopener">NASA</a> · <a href="https://www.ipcc.ch/report/ar6/wg1/chapter/summary-for-policymakers/" rel="noopener">IPCC AR6, resumen para responsables de políticas</a></p>
+        </article>
+        <article class="sus sus-no">
+          <p class="sus-v">Años sueltos, no la tendencia</p>
+          <h4>Siempre ha habido otoños calurosos</h4>
+          <p>Los ha habido, y el muro lo muestra: antes la mitad llegaban tarde y la otra mitad pronto. Las oscilaciones del Atlántico mueven unos años arriba y otros abajo, pero no empujan 75 años en la misma dirección en todas las provincias.</p>
+          <p class="sus-src">Fuentes: <a href="https://www.ipcc.ch/report/ar6/wg1/chapter/summary-for-policymakers/" rel="noopener">IPCC AR6, resumen para responsables de políticas</a></p>
+        </article>
+        <article class="sus sus-no">
+          <p class="sus-v">No</p>
+          <h4>Los volcanes</h4>
+          <p>Las grandes erupciones enfrían: el Pinatubo bajó la temperatura del planeta unas décimas en 1992. El Hunga Tonga (2022) lanzó mucho vapor de agua, pero su efecto neto en superficie fue mínimo, incluso de ligero enfriamiento. Y los otoños ya llevaban décadas llegando tarde.</p>
+          <p class="sus-src">Fuentes: <a href="https://www.giss.nasa.gov/pubs/abs/pa09400x.html" rel="noopener">Parker et al. 1996, Pinatubo</a> · <a href="https://doi.org/10.1029/2023GL104634" rel="noopener">Schoeberl et al. 2023, Hunga Tonga</a></p>
+        </article>
+        <article class="sus sus-no">
+          <p class="sus-v">No</p>
+          <h4>Estelas químicas y siembra de nubes</h4>
+          <p>Las estelas de los aviones son vapor de agua congelado, no fumigaciones. La siembra de nubes intenta hacer llover en un sitio y un momento concretos; no cambia la temperatura de un país durante décadas.</p>
+          <p class="sus-src">Fuentes: <a href="https://www.aemet.es/documentos/es/conocermas/modificacion_artificial_tiempo/estelas_condensacion.pdf" rel="noopener">AEMET, estelas de condensación</a> · <a href="https://doi.org/10.1088/1748-9326/11/8/084011" rel="noopener">Shearer et al. 2016, consulta a 77 expertos</a> · <a href="https://wmo.int/content/wmo-statement-weather-modification" rel="noopener">OMM, modificación del tiempo</a></p>
+        </article>
+      </div>
+    </div>
+
+    <div class="cul-sure">
+      <div>
+        <h3 class="h3">Lo que se sabe con seguridad</h3>
+        <ul>
+          <li>Que el otoño llega más tarde: lo miden los termómetros de esta web, en todas las provincias con datos.</li>
+          <li>Que el motor es el CO<span class="co2">2</span> humano: lo concluye el IPCC con física, con las huellas que deja (la superficie se calienta y la alta atmósfera se enfría) y porque los modelos solo reproducen lo observado si incluyen los gases que emitimos.</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="h3">Lo que se sabe menos</h3>
+        <ul>
+          <li>Cuánto pone cada cómplice en España: nadie lo ha repartido para el otoño con estos datos.</li>
+          <li>Algunos días de algunas estaciones: las series no están homogeneizadas y un cambio de emplazamiento puede sumar o restar.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cul-end">
+      <p>Los días robados no van a volver. Pero podemos dejar de perder más.</p>
+      <p class="cul-end-more">Buena parte del CO<span class="co2">2</span> que ya hemos emitido se queda en el aire durante siglos, así que el calor que ha añadido no se va. Pero la temperatura solo sube mientras sigamos añadiendo más. Si dejamos de emitir más CO<span class="co2">2</span> del que se retira (las «emisiones netas cero»), deja de subir, y el otoño deja de llegar cada año un poco más tarde. <a href="https://www.ipcc.ch/report/ar6/wg1/chapter/summary-for-policymakers/" rel="noopener">IPCC AR6</a></p>
+    </div>
+  </div>
+</section>
+
+<section id="comparte" class="band">
+  <div class="wrap share">
+    <div class="share-text-col">
+      <p class="eyebrow"><span class="tag-you">Tuyo</span> Denuncia</p>
+      <h2 class="h2 share-h" id="share-h">¡Que me los devuelvan!</h2>
+      <div class="seg" role="group" aria-label="Qué denunciar">
+        <button type="button" data-mode="me" aria-pressed="false">Mis días</button>
+        <button type="button" data-mode="prov" aria-pressed="false">Toda la provincia</button>
+      </div>
+      <p class="share-msg" id="share-lead"></p>
+      <label class="share-born" id="share-born-wrap"><span>¿En qué año naciste?</span><input id="share-born" type="number" inputmode="numeric" min="1935" max="2015" placeholder="1985"></label>
+      <p class="share-quote" id="share-text"></p>
+      <div class="share-btns">
+        <button id="share-native" class="btn btn-primary" type="button" hidden>Compartir</button>
+        <button id="share-copy" class="btn btn-ghost" type="button">Copiar texto y enlace</button>
+        <button id="share-dl" class="btn btn-ghost" type="button">Descargar imagen</button>
+      </div>
+      <p class="you-fine" id="share-hint" hidden>Tu navegador no permite compartir desde aquí. Copia el texto o mantén pulsada la imagen para guardarla.</p>
+      <p class="you-fine" id="share-fine"></p>
+    </div>
+    <div class="share-card"><img id="share-img" alt="Denuncia con los días de otoño que te han robado"><canvas id="share-canvas" hidden></canvas></div>
+  </div>
+</section>
+
+<section id="metodo" class="band band-method">
+  <div class="wrap">
+    <details class="method">
+      <summary><span class="eyebrow">Cómo se ha calculado</span><h2 class="h2">Metodología y fuentes</h2></summary>
+      <div class="method-grid">
+        <div>
+          <h3 class="h3">Qué está medido y qué no</h3>
+          <ul>
+            <li><b>Medido:</b> todas las cifras salen de series diarias de temperatura máxima y mínima de ECA&amp;D, que reúne las observaciones de AEMET y de otros servicios.</li>
+            <li><b>Una estación por provincia:</b> el color de cada provincia es el dato de su estación de referencia, normalmente la capital o su aeropuerto. No es la media de la provincia.</li>
+            <li><b>Real pero no climático:</b> los límites provinciales (Eurostat GISCO). Canarias va recolocada en un recuadro.</li>
+            <li><b>Recurso visual:</b> las hojas de la portada.</li>
+          </ul>
+          <h3 class="h3">Días de otoño robados</h3>
+          <ul>
+            <li id="metodo-antes"><b>El otoño de antes</b> es la referencia: la media de 1961–1990, el periodo de 30 años que la Organización Meteorológica Mundial mantiene para medir el cambio climático a largo plazo. Se usa en lugar de la normal más reciente (1991–2020) porque esa ya incluye buena parte del calentamiento: se compararía con un otoño que ya llegaba tarde. En cinco provincias sin datos de esos años (Castellón, Girona, Jaén, Palencia y Teruel), la referencia es 1991–2000, así que su cifra se queda corta.</li>
+            <li>Se ajusta una curva suave a la temperatura media de cada día ((máxima + mínima) / 2) de 1961–1990. En las cinco series parciales (Castellón, Girona, Jaén, Palencia y Teruel), de 1991–2000.</li>
+            <li>Para cada año se busca cuántos días hay que desplazar esa curva para que coincida con la del año entre el 15 de septiembre y el 15 de noviembre.</li>
+            <li>Un año suelto varía mucho (±6 días). La cifra es la tendencia: una regresión lineal local con pesos gaussianos de 10 años, evaluada en 2025, el último otoño completo (el de 2026 aún no ha terminado y ECA&amp;D publica con meses de retraso). Donde no hay al menos 6 años con datos cerca, no se dibuja.</li>
+            <li>Margen del 90 %: remuestreo de los años, 400 veces.</li>
+            <li>En Canarias el otoño apenas se enfría (menos de 0,07 °C al día) y la cifra en días no es comparable: se marca y no entra en la mediana.</li>
+            <li><b>El frente del otoño</b> (mapa): para cada provincia, el primer día en que la curva de 1961–1990 baja de 18 °C de media, que es la media de un 1 de octubre típico en España en ese periodo. «Hoy» es la misma curva desplazada los días robados en 2025, así que la fecha de hoy es la de antes más esos días. Con borde rojo, en el mapa de hoy, las provincias en las que ese día antes ya era otoño y hoy todavía no. Melilla es la última en llegar; sin ella, antes el otoño cubría el país el 30 oct. El umbral es una convención para ver el avance, no una definición oficial de otoño.</li>
+            <li><b>Grados de más en octubre</b>: diferencia de la temperatura media de octubre de cada año con la misma referencia, suavizada igual.</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="h3">Selección de estaciones</h3>
+          <ul>
+            <li>Un mes cuenta si tiene al menos 24 días válidos de máxima y de mínima. Solo se usan datos con código de calidad «válido».</li>
+            <li>Estación de referencia: se prefiere la que tiene datos propios, más otoños completos, está en la capital y por debajo de 1.200 m. En Almería y Álava, la serie de ECA&amp;D procede del aeropuerto (a 8,5 y 6,9 km).</li>
+            <li>Un año entra en el cálculo de días robados si tiene al menos 300 días con máxima y mínima válidas.</li>
+            <li><b>Datos propios</b>: ECA&amp;D rellena los huecos de una estación con la serie de una vecina. Una estación solo cuenta para el rango provincial si, en 1991–2000 y en 2016–2025, al menos el 80 % de sus días de otoño los midió un termómetro a menos de 3 km y 50 m de desnivel. Si dos comparten la misma serie original, se cuenta una vez.</li>
+          </ul>
+          <h3 class="h3">Límites</h3>
+          <ul>
+            <li>Las series de ECA&amp;D no están homogeneizadas: un cambio de emplazamiento puede introducir saltos. En el Observatorio Fabra, la serie de Meteocat da unos 3 días menos que la de ECA&amp;D.</li>
+            <li>Muchas estaciones están en aeropuertos o ciudades que han crecido desde 1950. Parte del cambio puede ser urbano y local.</li>
+            <li>Ceuta no tiene serie suficiente.</li>
+          </ul>
+          <h3 class="h3">Fuentes</h3>
+          <ul class="sources">
+            <li>Klein Tank, A.M.G. et al. (2002). Daily dataset of 20th-century surface air temperature and precipitation series for the European Climate Assessment. <i>Int. J. Climatol.</i> 22, 1441–1453. Datos: <a href="https://www.ecad.eu" rel="noopener">ECA&amp;D</a>, uso no comercial para investigación y educación.</li>
+            <li>Límites provinciales: © EuroGeographics, <a href="https://ec.europa.eu/eurostat/web/gisco" rel="noopener">GISCO</a> NUTS 2021.</li>
+            <li>Las afirmaciones sobre las causas («El culpable») enlazan a su fuente en cada tarjeta: IPCC AR6, NASA, NOAA, AEMET, OMM, Copernicus y artículos revisados por pares.</li>
+            <li>Código reproducible en <a href="https://github.com/smoya/nos-han-robado-el-otono" rel="noopener">GitHub</a>. Datos generados el <span id="built"></span>.</li>
+          </ul>
+        </div>
+        <div class="method-wide min0">
+          <h3 class="h3">Resultados por provincia</h3>
+          <div class="table-wrap">
+            <table id="prov-table" class="trend-table">
+              <thead><tr><th scope="col">Provincia y estación</th><th scope="col">Referencia</th><th scope="col">Días robados en 2025 (margen 90 %)</th><th scope="col">Rango en la provincia (días)</th><th scope="col">Grados de más en octubre (2025)</th><th scope="col">Otoños completos</th></tr></thead>
+              <tbody></tbody>
+            </table>
+            <p class="you-fine">* Canarias: el otoño apenas se enfría; la cifra en días no es comparable y no entra en la mediana.</p>
+          </div>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>Nos han robado el otoño es una iniciativa de <a href="/">Nos han robado</a>: divulgación con datos abiertos sobre lo que el clima nos está quitando.<br>Vibecodeado por <a href="https://www.linkedin.com/in/smoya/" rel="noopener">Sergio Moya</a>.</p>
+  </div>
+</footer>
+<div class="antes-pop" id="antes-pop" role="tooltip" hidden></div>
+</body>
+</html>

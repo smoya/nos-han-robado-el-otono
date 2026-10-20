@@ -1,0 +1,72 @@
+[build]
+  publish = "public"
+
+[functions]
+  directory = "netlify/functions"
+  included_files = ["netlify/fonts/*", "public/otono/data/spain.json"]
+  external_node_modules = ["@napi-rs/canvas"]
+
+# Subdominios y variantes con ñ apuntan a la ruta canónica noshanrobado.es/otono/
+[[redirects]]
+  from = "https://otono.noshanrobado.es/*"
+  to = "https://noshanrobado.es/otono/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://xn--otoo-iqa.noshanrobado.es/*"
+  to = "https://noshanrobado.es/otono/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.noshanrobado.es/*"
+  to = "https://noshanrobado.es/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://noshanrobado.com/*"
+  to = "https://noshanrobado.es/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.noshanrobado.com/*"
+  to = "https://noshanrobado.es/:splat"
+  status = 301
+  force = true
+
+# Enlaces ya compartidos con la URL antigua (antes la web estaba en la raíz)
+[[redirects]]
+  from = "https://nos-han-robado-el-otono.netlify.app/otono/*"
+  to = "https://noshanrobado.es/otono/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://nos-han-robado-el-otono.netlify.app/*"
+  to = "https://noshanrobado.es/otono/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/oto%C3%B1o/*"
+  to = "/otono/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/otoño/*"
+  to = "/otono/:splat"
+  status = 301
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/otono/data/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nos han robado</title>
+<meta name="description" content="Lo que el clima nos está quitando, contado con datos abiertos y provincia a provincia. Empezamos por el otoño.">
+<meta property="og:title" content="Nos han robado">
+<meta property="og:description" content="Lo que el clima nos está quitando, contado con datos abiertos. Empezamos por el otoño: llega hoy unos 12 días más tarde.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://noshanrobado.es/">
+<meta property="og:image" content="https://noshanrobado.es/otono/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Nos han robado el otoño: el otoño llega hoy 12 días más tarde que en 1961–1990">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://noshanrobado.es/">
+<meta name="theme-color" content="#0d1b24">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+  :root {
+    --night: #0d1b24;
+    --night-2: #13293a;
+    --paper: #f1e6d4;
+    --muted: #9fb3b9;
+    --leaf: #e59a2f;
+    --line: rgba(241, 230, 212, 0.14);
+    --font-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+    --font-body: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --font-data: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    color-scheme: dark;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; background: var(--night); color: var(--paper); font: 400 clamp(1rem, 0.96rem + 0.2vw, 1.12rem)/1.6 var(--font-body); -webkit-font-smoothing: antialiased; }
+  a { color: var(--leaf); }
+  :focus-visible { outline: 2px solid var(--leaf); outline-offset: 3px; }
+  .wrap { width: 100%; max-width: 46rem; margin: 0 auto; padding: 0 16px; }
+  main { flex: 1; padding: clamp(3rem, 10vh, 7rem) 0 3rem; }
+  h1 { font: 900 clamp(3.4rem, 1.4rem + 9vw, 7.5rem)/0.9 var(--font-display); text-transform: uppercase; letter-spacing: -0.01em; margin: 0 0 1.4rem; }
+  .lead { font-size: clamp(1.2rem, 1.05rem + 0.6vw, 1.5rem); max-width: 34rem; margin: 0 0 3rem; }
+  h2 { font: 600 0.8rem/1 var(--font-data); text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin: 0 0 1rem; }
+  ul { list-style: none; margin: 0 0 3rem; padding: 0; display: grid; gap: 0.8rem; }
+  .card { display: block; padding: 1.3rem 1.4rem; border: 1px solid var(--line); border-radius: 10px; background: var(--night-2); color: var(--paper); text-decoration: none; transition: border-color 0.2s; }
+  a.card:hover { border-color: var(--leaf); }
+  .card b { display: block; font: 700 clamp(1.6rem, 1.3rem + 1.4vw, 2.3rem)/1 var(--font-display); text-transform: uppercase; color: var(--leaf); margin-bottom: 0.4rem; }
+  .card span { color: var(--muted); }
+  .soon { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .soon li { font: 400 0.9rem/1 var(--font-data); color: var(--muted); border: 1px dashed var(--line); border-radius: 999px; padding: 0.55rem 0.9rem; }
+  footer { border-top: 1px solid var(--line); padding: 1.6rem 0; color: var(--muted); font-size: 0.9rem; }
+  footer p { margin: 0; }
+</style>
+</head>
+<body>
+<main>
+  <div class="wrap">
+    <h1>Nos han robado</h1>
+    <p class="lead">Lo que el clima nos está quitando, contado con datos abiertos y provincia a provincia.</p>
+
+    <h2>Primer robo</h2>
+    <ul>
+      <li><a class="card" href="/otono/"><b>El otoño</b><span>Llega hoy unos 12 días más tarde que el de 1961–1990. Mira cuántos te han robado a ti.</span></a></li>
+    </ul>
+
+    <h2>Otros robos en estudio</h2>
+    <ul class="soon">
+      <li>Las noches frescas</li>
+      <li>El invierno</li>
+      <li>La nieve</li>
+    </ul>
+  </div>
+</main>
+<footer>
+  <div class="wrap">
+    <p>Nos han robado. Un proyecto de divulgación con datos abiertos.<br>Vibecodeado por <a href="https://www.linkedin.com/in/smoya/" rel="noopener">Sergio Moya</a>.</p>
+  </div>
+</footer>
+</body>
+</html>
